@@ -1,0 +1,83 @@
+public class Goku {
+    private String name;
+    private int powerLevel;
+
+    public Goku(String name, int powerLevel) {
+        this.name = name;
+        this.powerLevel = powerLevel;
+    }
+
+    public void powerUp(int amount) {
+        System.out.println(name + " is powering up!");
+        powerLevel += amount;
+        System.out.println("Power level increased to " + powerLevel);
+    }
+
+    public void fight(Villain villain) {
+        System.out.println(name + " is fighting " + villain.getName() + "!");
+
+        while (powerLevel > 0 && villain.getPowerLevel() > 0) {
+            int damage = (int) (Math.random() * powerLevel);
+            int villainDamage = (int) (Math.random() * villain.getPowerLevel());
+
+            System.out.println(name + " deals " + damage + " damage to " + villain.getName() + "!");
+            villain.takeDamage(damage);
+
+            System.out.println(villain.getName() + " deals " + villainDamage + " damage to " + name + "!");
+            takeDamage(villainDamage);
+        }
+
+        if (powerLevel <= 0) {
+            System.out.println(name + " has been defeated by " + villain.getName() + "!");
+        } else {
+            System.out.println(name + " has defeated " + villain.getName() + "!");
+        }
+    }
+
+    public void takeDamage(int damage) {
+        powerLevel -= damage;
+        if (powerLevel < 0) {
+            powerLevel = 0;
+        }
+        System.out.println(name + " takes " + damage + " damage! Power level is now " + powerLevel);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPowerLevel() {
+        return powerLevel;
+    }
+
+    public static void main(String[] args) {
+        Goku goku = new Goku("Goku", 9000);
+        Villain villain = new Villain("Cell", 8000);
+        goku.fight(villain);
+    }
+}
+
+class Villain {
+    private String name;
+    private int powerLevel;
+
+    public Villain(String name, int powerLevel) {
+        this.name = name;
+        this.powerLevel = powerLevel;
+    }
+
+    public void takeDamage(int damage) {
+        powerLevel -= damage;
+        if (powerLevel < 0) {
+            powerLevel = 0;
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPowerLevel() {
+        return powerLevel;
+    }
+}
